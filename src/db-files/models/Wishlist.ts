@@ -15,7 +15,7 @@ WishList.init(
       primaryKey: true,
     },
     userId: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
         model: User,
         key: 'id',

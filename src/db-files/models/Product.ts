@@ -52,7 +52,7 @@ Product.init(
       },
     },
     categoryId: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
         model: Category,
         key: 'id',

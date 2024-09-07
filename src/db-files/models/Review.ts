@@ -28,7 +28,7 @@ Review.init(
       type: DataTypes.STRING(500),
     },
     productId: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       references: {
         model: Product,
         key: 'id',
