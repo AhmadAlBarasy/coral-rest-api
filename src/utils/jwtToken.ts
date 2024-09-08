@@ -1,8 +1,5 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 import User from '../db-files/models/User';
-
-dotenv.config();
 
 const TOKEN_EXPIRES_IN = process.env.TOKEN_EXPIRES_IN || '1m';
 const SECURE_ALGORITH = process.env.SECURE_ALGORITH || 'HS256';

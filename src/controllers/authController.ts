@@ -3,19 +3,22 @@ import errorHandler from '../utils/errorHandler';
 import APIError from '../utils/APIError';
 import { generateToken } from '../utils/jwtToken';
 import bcrypt from 'bcryptjs';
-import { checkIfEmailExists,
-  checkIfUserExists ,
-  userResponseFormatter } from '../services/userService';
+import { 
+  checkIfDomainSupportsEmail,
+  checkIfUserExists,
+  getEmailDomain } from '../services/userService';
 import User from '../db-files/models/User';
 
 const signup = errorHandler(
   async(req: Request, res: Response, next: NextFunction) => {
-    const { firstName, lastName, email, password } =
-      req.body;
-    if (await checkIfEmailExists(email)) {
+    const { firstName, lastName, email, password } = req.body;
+    if (await checkIfUserExists({ email })) {
       return next(new APIError('Email already in use', 400));
     }
-
+    // this if condition checks if the given email's domain supports mail exchange (has at least 1 MX record)
+    if (! await checkIfDomainSupportsEmail(getEmailDomain(email))){
+      return next(new APIError('Email domain does not support mail exchange.', 400));
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     await User.create({
       firstName,
@@ -25,6 +28,7 @@ const signup = errorHandler(
     });
 
     res.status(201).json({
+      status: 'success',
       message: 'User registered successfully',
     });
   },
@@ -48,9 +52,10 @@ const login = errorHandler(
     });
 
     res.status(200).json({
+      status: 'success',
       message: 'Logged in successfully',
-      token ,
-      user: userResponseFormatter(user) });
+      token,
+    });
   },
 );
 
@@ -58,7 +63,10 @@ const login = errorHandler(
 const logout = errorHandler(
   async(req: Request, res: Response, next: NextFunction) => {
     res.clearCookie('jwt', { httpOnly: true });
-    res.status(200).json({ message: 'Successfully logged out' });
+    res.status(200).json({
+      status: 'success',
+      message: 'Successfully logged out'
+    });
   },
 );
 
