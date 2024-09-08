@@ -1,4 +1,6 @@
 import User from '../db-files/models/User';
+import dns from 'dns';
+import { logger } from '../loggers/app-logger';
 
 const checkIfEmailExists = async(email: string): Promise<boolean> => {
   const existingUser = await User.findOne({ where: { email } });
@@ -35,4 +37,31 @@ const userResponseFormatter = (user: User): object => {
   };
 };
 
-export { checkIfEmailExists, checkIfUserExists , userResponseFormatter };
+const getEmailDomain = (email: string): string => {
+  return email.split('@')[1];
+};
+
+const checkIfDomainSupportsEmail = (domain: string): Promise<boolean> => {
+  let dnsPromise = new Promise((resolve, reject) => {
+    dns.resolveMx(domain, (err, addresses) => {
+      if (err) {
+        reject(false);
+      }
+      if (addresses && addresses.length > 0) {
+        resolve(true);
+      }
+      reject(false);
+    });
+  });
+  return dnsPromise
+  .then(res => true)
+  .catch(rej => false);
+};
+
+export { 
+  checkIfEmailExists,
+  checkIfUserExists,
+  userResponseFormatter,
+  getEmailDomain,
+  checkIfDomainSupportsEmail,
+ };
