@@ -85,7 +85,7 @@ const forgotPassword = errorHandler(
       return next(new APIError('Invalid email', 400));
     }
     const resetToken = crypto.randomBytes(32).toString('hex');
-    user.resetToken = await bcrypt.hash(resetToken, 10);
+    user.resetToken = resetToken;
     user.resetTokenExpiry = new Date(Date.now() + (10 * 60 * 1000));
     await user.save();
     await transporter.sendMail(resetPasswordTemplate(email, resetToken));
@@ -96,9 +96,37 @@ const forgotPassword = errorHandler(
   }
 );
 
+const resetPassword = errorHandler(
+  async(req: Request, res: Response, next: NextFunction) => {
+    const { token } = req.params;
+    const { password } = req.body;
+    const user = await checkIfUserExists({ resetToken: token });
+    if (!user){
+      return next(new APIError('Invalid token', 400));
+    }
+    if (user.resetTokenExpiry && new Date(Date.now()) > user.resetTokenExpiry) {
+      user.resetToken = null;
+      user.resetTokenExpiry = null;
+      await user.save();
+      return next(new APIError('Reset token expired', 400));
+    }
+    user.password = await bcrypt.hash(password, 10);
+    // clean up (update the reset token and the expiry date for the user to be null)
+    user.resetToken = null;
+    user.resetTokenExpiry = null;
+    await user.save();
+    res.status(200).json({
+      status: 'success',
+      message: 'Password has been reset successfully',
+    });
+
+  },
+);
+
 export { 
   signup,
   login,
   logout,
-  forgotPassword
+  forgotPassword,
+  resetPassword,
 };
