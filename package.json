@@ -11,8 +11,7 @@
     "create:seeder": "sequelize-cli seed:generate --name category",
     "data": "sequelize-cli db:seed:all",
     "lint": "eslint **/*.{js,mjs,cjs,ts}",
-    "lint:fix": "eslint  **/*.{js,mjs,cjs,ts} --fix",
-    "generate-secret": "nodemon utils/generateSecret.ts"
+    "lint:fix": "eslint  **/*.{js,mjs,cjs,ts} --fix"
   },
   "keywords": [],
   "author": "",
