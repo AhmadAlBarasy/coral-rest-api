@@ -1,11 +1,16 @@
 import nodemailer from 'nodemailer';
 
+const MAIL_HOST: string = process.env.MAIL_HOST || 'host';
+const MAIL_PORT: number = Number(process.env.MAIL_PORT) || 587;
+const MAIL_USER: string = process.env.MAIL_USER || 'user';
+const MAIL_PASSWORD: string = process.env.MAIL_PASSWORD || 'password';
+
 const transporter = nodemailer.createTransport({
-  host: 'live.smtp.mailtrap.io',
-  port: 587,
+  host: MAIL_HOST,
+  port: MAIL_PORT,
   auth: {
-    user: 'api',
-    pass: 'fe9e0d27b8a7963c57e4f7a7f7a3e060'
+    user: MAIL_USER,
+    pass: MAIL_PASSWORD,
   }
 });
 
