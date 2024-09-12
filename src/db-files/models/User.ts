@@ -13,8 +13,8 @@ class User extends Model {
   role!: UserRole;
   dateOfBirth?: Date;
   balance!: number;
-  resetToken!: string;
-  resetTokenExpiry!: Date;
+  resetToken!: string | null;
+  resetTokenExpiry!: Date | null;
 }
 
 User.init(
