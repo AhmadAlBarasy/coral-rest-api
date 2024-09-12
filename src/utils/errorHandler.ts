@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { AsyncRequestHandler } from '../utils/functions/AsyncRequestHandler';
+import { AsyncRequestHandler } from './types/AsyncRequestHandler';
 // to wrap controllers calls in a call that has a catch nested to it
 // so errors will be moved to the global error handler
 const errorHandler =
