@@ -2,12 +2,15 @@ import { NextFunction, Request, Response } from 'express';
 import errorHandler from '../utils/errorHandler';
 import APIError from '../utils/APIError';
 import { generateToken } from '../utils/jwtToken';
-import bcrypt from 'bcryptjs';
 import { 
   checkIfDomainSupportsEmail,
   checkIfUserExists,
   getEmailDomain } from '../services/userService';
+import transporter from '../utils/mail/mailSender';
 import User from '../db-files/models/User';
+import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+import { resetPasswordTemplate } from '../utils/mail/mailTemplates';
 
 const signup = errorHandler(
   async(req: Request, res: Response, next: NextFunction) => {
@@ -16,7 +19,7 @@ const signup = errorHandler(
       return next(new APIError('Email already in use', 400));
     }
     // this if condition checks if the given email's domain supports mail exchange (has at least 1 MX record)
-    if (! await checkIfDomainSupportsEmail(getEmailDomain(email))){
+    if (!await checkIfDomainSupportsEmail(getEmailDomain(email))){
       return next(new APIError('Email domain does not support mail exchange.', 400));
     }
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -70,4 +73,32 @@ const logout = errorHandler(
   },
 );
 
-export { signup, login, logout };
+const forgotPassword = errorHandler(
+  async(req: Request, res: Response, next: NextFunction) => {
+    const { email } = req.body;
+    // check if email is valid
+    if (!await checkIfDomainSupportsEmail(getEmailDomain(email))){
+      return next(new APIError('Invalid email', 400));
+    }
+    const user = await checkIfUserExists({ email }); 
+    if (!user){
+      return next(new APIError('Invalid email', 400));
+    }
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    user.resetToken = await bcrypt.hash(resetToken, 10);
+    user.resetTokenExpiry = new Date(Date.now() + (10 * 60 * 1000));
+    await user.save();
+    await transporter.sendMail(resetPasswordTemplate(email, resetToken));
+    res.status(200).json({
+      status: 'success',
+      message: `An email with a reset link has been sent to ${email}, the link will expire in 10 mintues`,
+    });
+  }
+);
+
+export { 
+  signup,
+  login,
+  logout,
+  forgotPassword
+};

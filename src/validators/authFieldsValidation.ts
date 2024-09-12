@@ -55,4 +55,11 @@ const loginValidation = Joi.object({
     }),
 });
 
-export { registerValidation, loginValidation };
+const emailValidation = Joi.object({
+  email: Joi.string().email({ tlds: { allow: false } }).required().messages({
+    'string.email': 'Invalid email format',
+    'any.required': 'Email is required',
+  }),
+});
+
+export { registerValidation, loginValidation, emailValidation };
