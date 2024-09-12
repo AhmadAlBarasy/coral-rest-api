@@ -13,6 +13,8 @@ class User extends Model {
   role!: UserRole;
   dateOfBirth?: Date;
   balance!: number;
+  resetToken!: string;
+  resetTokenExpiry!: Date;
 }
 
 User.init(
@@ -74,6 +76,12 @@ User.init(
       defaultValue: 20000,
       allowNull: false,
     },
+    resetToken: {
+      type: DataTypes.STRING(64),
+    },
+    resetTokenExpiry: {
+      type: DataTypes.DATE,
+    }
   },
   {
     sequelize,
