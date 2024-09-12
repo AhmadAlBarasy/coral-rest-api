@@ -1,6 +1,5 @@
 import User from '../db-files/models/User';
 import dns from 'dns';
-import { logger } from '../loggers/app-logger';
 
 const checkIfEmailExists = async(email: string): Promise<boolean> => {
   const existingUser = await User.findOne({ where: { email } });
@@ -8,19 +7,20 @@ const checkIfEmailExists = async(email: string): Promise<boolean> => {
 };
 
 const checkIfUserExists = async(
-  options: { email?: string, id?: string },
+  options: {
+    email?: string,
+    id?: string,
+    resetToken?: string,
+  },
 ): Promise<User | null> => {
-  const { email, id } = options;
-  const query: { [key: string]: string } = {};
 
-  if (email) {
-    query.email = email;
-  }
+  const { email, id, resetToken } = options;
+  const query: { [key: string]: any } = {};
 
-  if (id) {
-    query.id = id;
-  }
-
+  // if any of the options are provided, add them to the query.
+  resetToken ? query.resetToken = resetToken : null;
+  email ? query.email = email : null;
+  id ? query.id = id: null;
   const user = await User.findOne({ where: query });
   return user;
 };
