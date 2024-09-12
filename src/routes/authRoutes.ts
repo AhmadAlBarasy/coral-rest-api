@@ -1,7 +1,16 @@
 import { Router } from 'express';
-import { signup, login, logout } from '../controllers/authController';
+import { 
+  signup,
+  login,
+  logout,
+  forgotPassword,
+  resetPassword } from '../controllers/authController';
 import { methodNotAllowed } from '../controllers/suspicionController';
-import { registerValidation, loginValidation } from '../validators/authFieldsValidation';
+import { 
+  registerValidation,
+  loginValidation,
+  forgotPasswordValidation, 
+  resetPasswordValidation} from '../validators/authFieldsValidation';
 import validateJoiRequest from '../middlewares/validateJoiRequest';
 import authMiddleware from '../middlewares/authMiddleware';
 
@@ -12,15 +21,30 @@ authRouter.route('/signup')
     validateJoiRequest({ bodySchema: registerValidation }), 
     signup,
   );
+
 authRouter.route('/login')
-  .post(validateJoiRequest({ bodySchema: loginValidation }),
-  login,
+  .post(
+    validateJoiRequest({ bodySchema: loginValidation }),
+    login,
   );
+
 authRouter.route('/logout')
-.get(
-  authMiddleware, 
-  logout,
-);
+  .get(
+    authMiddleware, 
+    logout,
+  );
+
+authRouter.route('/forgot-password')
+  .post(
+    validateJoiRequest({ bodySchema: forgotPasswordValidation }),
+    forgotPassword,
+  );
+
+authRouter.route('/reset-password/:token')
+  .post(
+    validateJoiRequest({ bodySchema: resetPasswordValidation }),
+    resetPassword,
+  );
 
 authRouter.route('*').all(methodNotAllowed);
 
