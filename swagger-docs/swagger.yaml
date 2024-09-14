@@ -57,6 +57,40 @@ paths:
           description: Unauthorized
         '500':
           description: Internal server error
+  
+  /api/auth/forgot-password:
+    post:
+      tags: [Auth]
+      summary: Request a reset link to the entered email in the request body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPassword'
+      responses:
+        '200':
+          description: A reset link has been sent to the user email
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal server error
+
+  /api/auth/reset-password/{token}:
+    post:
+      tags: [Auth]
+      summary: Resets the user password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPassword'
+      responses:
+        '200':
+          description: Password reset successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal server error
 
 
   /api/users:
@@ -1037,6 +1071,21 @@ components:
         - email
         - password
 
+    ForgotPassword:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: 'john.doe@gmail.com'
+
+    ResetPassword:
+      type: object
+      properties:
+        password:
+          type: string
+          example: Test@test1234
+
     UpdateUser:
       type: object
       properties:
@@ -1049,7 +1098,7 @@ components:
         email:
           type: string
           format: email
-          example: 'john_doe_updated@example.com'
+          example: 'john.doe@gmail.com'
         image:
           type: string
           format: binary
