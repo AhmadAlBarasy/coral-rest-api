@@ -2,6 +2,7 @@
 
 ## Table of Contents
 - [Introduction](#introduction)
+- [Technologies Used](#technologies-used)
 - [Documentation](#documentation)
 - [Credits](#credits)
 
@@ -12,6 +13,19 @@ This is a RESTful API for an E-commerce website called CORA'L that I worked on w
 * Check out the website design through the following [figma link](https://www.figma.com/design/4J9VUII8IXBs1CVidFvPy9/SD-Final-Project?node-id=0-1)
 ### What is CORA'L ?
 CORA'L is a dynamic E-commerce platform specializing in a curated collection of women's accessories, including stylish handbags and elegant watches. In addition to offering a range of fashionable accessories, CORA'L provides high-quality health and skincare products to enhance beauty and well-being.
+## Technologies used
+* Node.js as a runtime environment
+* Express.js as the backend framework.
+* JWT (JSON Web Tokens) to implement the authentication system.
+* TypeScript for adding static typing and improving code reliability.
+* MySQL for the DBMS.
+* Sequelize for the ORM
+* Jest and Supertest for unit testing. 
+* Render (a well-known PAAS) for deployment.
+* CleverCloud as the remote database service.
+* Firebase storage as a service for storing static files (products and users' images).
+* GitHub Actions workflows for ensuring that pushed code is compliant to Eslint rules define in [eslint-rules.md](eslint-rules.md) and to run P0 and P1 tests automatically.
+* Swagger and Swagger UI for documenting the API endpoints.
 ## Documentation
 - [Eslint rules](eslint-rules.md) used in this project to ensure code style and format consistency
 - [Swagger Documentation](swagger-docs/swagger.yaml) for the API endpoints
