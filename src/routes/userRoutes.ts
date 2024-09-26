@@ -14,7 +14,7 @@ import {
   updateUserValidation,
   updateUserRoleValidation,
   updateUserPasswordValidation,
-} from '../validators/userFieldsValidation';
+} from '../schemas/userFieldsValidation';
 import validateJoiRequest from '../middlewares/validateJoiRequest';
 import authMiddleware from '../middlewares/authMiddleware';
 import adminMiddleware from '../middlewares/adminMiddleware';

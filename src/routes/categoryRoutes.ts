@@ -9,7 +9,7 @@ import {
 import { methodNotAllowed } from '../controllers/suspicionController';
 import { createCategoryValidation
   , categoryIdValidation
-  , updateCategoryValidation } from '../validators/categoryFieldsValidation';
+  , updateCategoryValidation } from '../schemas/categoryFieldsValidation';
 import validateJoiRequest from '../middlewares/validateJoiRequest';
 
 import authMiddleware  from '../middlewares/authMiddleware';

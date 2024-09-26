@@ -8,7 +8,7 @@ import {
   getProductsQueryValidation,
   productIdValidation,
   updateProductValidation,
-  deleteProductImageValidation } from '../validators/productFieldsValidation';
+  deleteProductImageValidation } from '../schemas/productFieldsValidation';
 import {
   createProduct,
   getProduct,

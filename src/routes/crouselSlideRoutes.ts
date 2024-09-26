@@ -11,7 +11,7 @@ import {
   createCarouselSlideValidation,
   carouselSlideIdValidation,
   updateCarouselSlideValidation,
-} from '../validators/carouselSlideFieldsValidation';
+} from '../schemas/carouselSlideFieldsValidation';
 import validateJoiRequest from '../middlewares/validateJoiRequest';
 import authMiddleware from '../middlewares/authMiddleware';
 import adminMiddleware from '../middlewares/adminMiddleware';

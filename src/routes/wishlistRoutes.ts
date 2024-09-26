@@ -7,7 +7,7 @@ import {
 import { methodNotAllowed } from '../controllers/suspicionController';
 
 import validateJoiRequest from '../middlewares/validateJoiRequest';
-import {  wishListProductIdValidation } from '../validators/wishlistFieldsValidation';
+import {  wishListProductIdValidation } from '../schemas/wishlistFieldsValidation';
 
 import authMiddleware from '../middlewares/authMiddleware';
 
