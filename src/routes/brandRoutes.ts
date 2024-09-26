@@ -10,7 +10,7 @@ import {
 } from '../controllers/brandsController';
 import validateJoiRequest from '../middlewares/validateJoiRequest';
 import {
-  createBrandValidation, brandIdValidation, updateBrandValidation,
+  createBrandValidation, brandIdValidator, updateBrandValidation,
 } from '../validators/brandFieldsValidation';
 import { methodNotAllowed } from '../controllers/suspicionController';
 import uploadToMemory from '../middlewares/memoryUploadMiddleware';
@@ -33,23 +33,23 @@ brandRouter.route('/')
 brandRouter.route('/:id')
   .get(
     authMiddleware,
-    validateJoiRequest({ paramsSchema: brandIdValidation }),
+    validateJoiRequest({ paramsSchema: brandIdValidator }),
     getBrandById,
   )
   .put(
     uploadToMemory,
     authMiddleware,
     adminMiddleware,
-    validateJoiRequest({ paramsSchema: brandIdValidation }),
-    validateJoiRequest({ bodySchema: updateBrandValidation }),
+    validateJoiRequest({ bodySchema: updateBrandValidation, paramsSchema: brandIdValidator }),
     updateBrandById,
   )
   .delete(
     authMiddleware,
     adminMiddleware,
-    validateJoiRequest({ paramsSchema: brandIdValidation }),
+    validateJoiRequest({ paramsSchema: brandIdValidator }),
     deleteBrandById,
   );
 
 brandRouter.route('*').all(methodNotAllowed);
+
 export default brandRouter;
