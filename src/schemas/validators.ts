@@ -18,6 +18,14 @@ const emailValidator = Joi.string()
     'any.required': 'Email is required',
   });
 
+const internationalPhoneNumberValidator = Joi.string()
+  .pattern(/^\+\d{10,15}$/)
+  .required()
+  .messages({
+    'any.required': 'Phone number is required. Please provide a valid phone number.',
+    'string.pattern.base': 'Phone number must start with a "+" sign and be followed by 10 to 15 digits. Ensure the number is in the correct international format.',
+  });
+
   const passwordValidator = Joi.string()
   .min(8)
   .required()
@@ -70,6 +78,7 @@ const numberFieldValidator = (fieldName: string, min: number, max: number, preci
 export {
   emailValidator,
   passwordValidator,
+  internationalPhoneNumberValidator,
   stringFieldValidator,
   optionalStringFieldValidator,
   numberFieldValidator,

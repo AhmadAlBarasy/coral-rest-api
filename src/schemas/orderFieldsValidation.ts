@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import Joi from 'joi';
-import { stringFieldValidator, uuidV4validator } from './validators';
+import { internationalPhoneNumberValidator, stringFieldValidator, uuidV4validator } from './validators';
 
 const addressValidation = Joi.object({
   state: stringFieldValidator('State', 50, 3),
@@ -44,13 +44,7 @@ const createOrderValidation = Joi.object({
       'any.required': 'Address information is required.',
       'object.base': 'The address must be an object containing state, city, street, and PIN code.',
     }),
-  phoneNumber: Joi.string()
-    .pattern(/^\+\d{10,15}$/)
-    .required()
-    .messages({
-      'any.required': 'Phone number is required. Please provide a valid phone number.',
-      'string.pattern.base': 'Phone number must start with a "+" sign and be followed by 10 to 15 digits. Ensure the number is in the correct international format.',
-    }),
+  phoneNumber: internationalPhoneNumberValidator,
   orderOwner: stringFieldValidator('Order owner', 50, 3),
   cardNumber: Joi.string()
     .required()
