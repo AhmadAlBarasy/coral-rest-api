@@ -1,29 +1,12 @@
 import Joi from 'joi';
-
-const brandNameValidator = Joi.string()
-  .min(3)
-  .max(50)
-  .messages({
-    'string.min': 'Brand name must be at least 3 characters long',
-    'string.max': 'Brand name must be less than or equal to 50 characters long',
-  });
-
-const brandIdValidator = Joi.object({
-  id: Joi.string()
-    .uuid({ version: 'uuidv4' })
-    .required()
-    .messages({
-      'string.guid': 'ID must be a valid UUID.',
-      'any.required': 'Brand ID is required',
-      'string.base': 'Brand ID must be a string',
-    }),
-});
+import { stringFieldValidator } from './validators';
 
 const createBrandValidation = Joi.object({
-  name: brandNameValidator,
+  name: stringFieldValidator('Brand name', 50, 3),
 });
 
 const updateBrandValidation = Joi.object({
-  name: brandNameValidator,
+  name: stringFieldValidator('Brand name', 50, 3),
 });
-export { createBrandValidation, brandIdValidator, updateBrandValidation };
+
+export { createBrandValidation, updateBrandValidation };
