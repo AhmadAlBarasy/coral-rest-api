@@ -10,7 +10,7 @@ import {
   registerValidation,
   loginValidation,
   forgotPasswordValidation, 
-  resetPasswordValidation} from '../validators/authFieldsValidation';
+  resetPasswordValidation} from '../schemas/authFieldsValidation';
 import validateJoiRequest from '../middlewares/validateJoiRequest';
 import authMiddleware from '../middlewares/authMiddleware';
 

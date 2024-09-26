@@ -4,7 +4,7 @@ import validateJoiRequest from '../middlewares/validateJoiRequest';
 import {
   createOrderValidation,
   orderIdValidation,
-} from '../validators/orderFieldsValidation';
+} from '../schemas/orderFieldsValidation';
 import { createOrder, getAllOrders, getOrderData } from '../controllers/ordersController';
 import { methodNotAllowed } from '../controllers/suspicionController';
 

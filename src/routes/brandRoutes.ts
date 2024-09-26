@@ -10,8 +10,9 @@ import {
 } from '../controllers/brandsController';
 import validateJoiRequest from '../middlewares/validateJoiRequest';
 import {
-  createBrandValidation, brandIdValidator, updateBrandValidation,
-} from '../validators/brandFieldsValidation';
+  createBrandValidation, 
+  brandIdValidation, 
+  updateBrandValidation } from '../schemas/brandFieldsValidation';
 import { methodNotAllowed } from '../controllers/suspicionController';
 import uploadToMemory from '../middlewares/memoryUploadMiddleware';
 
@@ -33,20 +34,20 @@ brandRouter.route('/')
 brandRouter.route('/:id')
   .get(
     authMiddleware,
-    validateJoiRequest({ paramsSchema: brandIdValidator }),
+    validateJoiRequest({ paramsSchema: brandIdValidation }),
     getBrandById,
   )
   .put(
     uploadToMemory,
     authMiddleware,
     adminMiddleware,
-    validateJoiRequest({ bodySchema: updateBrandValidation, paramsSchema: brandIdValidator }),
+    validateJoiRequest({ bodySchema: updateBrandValidation, paramsSchema: brandIdValidation }),
     updateBrandById,
   )
   .delete(
     authMiddleware,
     adminMiddleware,
-    validateJoiRequest({ paramsSchema: brandIdValidator }),
+    validateJoiRequest({ paramsSchema: brandIdValidation }),
     deleteBrandById,
   );
 

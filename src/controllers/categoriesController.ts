@@ -3,7 +3,7 @@ import Category from '../db-files/models/Category';
 import errorHandler from '../utils/errorHandler';
 import checkIfCategoryExists from '../services/categoryService';
 import APIError from '../utils/APIError';
-import isValidFileName from '../validators/fileNameValidator';
+import isValidFileName from '../schemas/fileNameValidator';
 import { deleteFromFirebase, uploadToFireBase } from '../utils/firebaseOperations';
 
 const createNewCategory = errorHandler(

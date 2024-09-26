@@ -3,7 +3,7 @@ import errorHandler from '../utils/errorHandler';
 import Brand from '../db-files/models/Brand';
 import APIError from '../utils/APIError';
 import { checkIfBrandExists } from '../services/brandService';
-import isValidFileName from '../validators/fileNameValidator';
+import isValidFileName from '../schemas/fileNameValidator';
 import { uploadToFireBase, deleteFromFirebase } from '../utils/firebaseOperations';
 
 const createNewBrand = errorHandler(

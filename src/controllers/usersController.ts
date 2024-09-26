@@ -115,7 +115,6 @@ const changeUserRole = errorHandler(
 
     user.role = role;
     await user.save();
-
     // Send the updated user response
     const formattedUser = userResponseFormatter(user);
     res.status(200).json({ status: 'success', user: formattedUser });

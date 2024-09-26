@@ -10,7 +10,7 @@ import { methodNotAllowed } from '../controllers/suspicionController';
 import validateJoiRequest from '../middlewares/validateJoiRequest';
 import { createReviewValidation,
   reviewIdValidation,updateReviewValidation,
-} from '../validators/reviewFieldsValidation';
+} from '../schemas/reviewFieldsValidation';
 import authMiddleware from '../middlewares/authMiddleware';
 
 const reviewRouter = Router();
