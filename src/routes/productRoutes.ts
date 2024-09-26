@@ -38,7 +38,8 @@ productsRouter.route('/')
     authMiddleware,
     adminMiddleware,
     validateJoiRequest({ bodySchema: createProductValidation }),
-    createProduct);
+    createProduct
+  );
 
 productsRouter.get('/:id/reviews',
   authMiddleware,
@@ -90,8 +91,7 @@ productsRouter.route('/:id')
   .put(
     authMiddleware,
     adminMiddleware,
-    validateJoiRequest({ paramsSchema: productIdValidation }),
-    validateJoiRequest({ bodySchema: updateProductValidation }),
+    validateJoiRequest({ bodySchema: updateProductValidation, paramsSchema: productIdValidation }),
     updateProduct,
   )
   .delete(
