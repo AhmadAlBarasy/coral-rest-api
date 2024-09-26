@@ -1,5 +1,9 @@
 import Joi from 'joi';
-import { stringFieldValidator } from './validators';
+import { stringFieldValidator, uuidV4validator } from './validators';
+
+const categoryIdValidation = Joi.object({
+  id: uuidV4validator('Category ID'),
+});
 
 const createCategoryValidation = Joi.object({
   name: stringFieldValidator('Category Name', 50, 3),
@@ -11,4 +15,4 @@ const updateCategoryValidation = Joi.object({
   description: stringFieldValidator('Category description', 150, 3),
 });
 
-export  { createCategoryValidation, updateCategoryValidation };
+export  { categoryIdValidation, createCategoryValidation, updateCategoryValidation };

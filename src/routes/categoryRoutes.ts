@@ -7,13 +7,12 @@ import {
   updateCategoryById,
 } from '../controllers/categoriesController';
 import { methodNotAllowed } from '../controllers/suspicionController';
-import { createCategoryValidation
-  , categoryIdValidation
-  , updateCategoryValidation } from '../schemas/categoryFieldsValidation';
+import { 
+  createCategoryValidation,
+  categoryIdValidation,
+  updateCategoryValidation } from '../schemas/categoryFieldsValidation';
 import validateJoiRequest from '../middlewares/validateJoiRequest';
-
 import authMiddleware  from '../middlewares/authMiddleware';
-
 import adminMiddleware from '../middlewares/adminMiddleware';
 import uploadToMemory from '../middlewares/memoryUploadMiddleware';
 
