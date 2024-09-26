@@ -11,7 +11,7 @@ const resetPasswordValidation = Joi.object({
 
 const loginValidation = Joi.object({
   email: emailValidator,
-  password: passwordValidator,
+  password: stringFieldValidator('Password', 100, 1),
 });
 
 const registerValidation = Joi.object({
