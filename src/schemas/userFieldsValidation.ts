@@ -1,33 +1,15 @@
 import Joi from 'joi';
+import { internationalPhoneNumberValidator, optionalStringFieldValidator, passwordValidator, uuidV4validator } from './validators';
 
 // Validation schema for user ID
 const userIdValidation = Joi.object({
-  id: Joi.string()
-    .uuid({ version: 'uuidv4' })
-    .required()
-    .messages({
-      'string.base': 'ID should be a type of string.',
-      'string.guid': 'ID must be a valid UUID.',
-      'any.required': 'ID is a required field.',
-    }),
+  id: uuidV4validator('User ID'),
 });
 
 const updateUserValidation = Joi.object({
-  firstName: Joi.string()
-    .max(100)
-    .optional()
-    .messages({
-      'string.base': 'First Name should be a type of text.',
-      'string.max': 'First Name should have a maximum length of {#limit}.',
-    }),
+  firstName: optionalStringFieldValidator('User First name', 100, 3),
 
-  lastName: Joi.string()
-    .max(100)
-    .optional()
-    .messages({
-      'string.base': 'Last Name should be a type of text.',
-      'string.max': 'Last Name should have a maximum length of {#limit}.',
-    }),
+  lastName: optionalStringFieldValidator('User last name', 100, 3),
 
   dateOfBirth: Joi.date()
     .iso()
@@ -36,16 +18,7 @@ const updateUserValidation = Joi.object({
       'date.base': 'Date of Birth should be a valid date.',
     }),
 
-  mobileNumber: Joi.string()
-    .pattern(/^\+?[0-9]{10,15}$/)
-    .optional()
-    .messages({
-      'string.base': 'Mobile Number should be a type of text.',
-      'string.pattern.base': `Mobile Number must be in the correct international format 
-      with 10 to 15 digits, optionally starting with a "+".`,
-      'string.min': 'Mobile Number should have at least {#limit} digits.',
-      'string.max': 'Mobile Number should have a maximum length of {#limit} digits.',
-    }),
+  mobileNumber: internationalPhoneNumberValidator,
 }).min(1).messages({
   'object.min': 'At least one field is required for update.',
 });
@@ -68,18 +41,7 @@ const updateUserPasswordValidation = Joi.object({
       'string.base': 'Current password should be a type of text.',
       'any.required': 'Current password is required.',
     }),
-  newPassword: Joi.string()
-    .min(8)
-    .required()
-    .pattern(/[A-Z]/, 'uppercase letter')
-    .pattern(/[a-z]/, 'lowercase letter')
-    .pattern(/\d/, 'number')
-    .pattern(/[\W_]/, 'special character')
-    .messages({
-      'string.min': 'New password must be at least 8 characters long.',
-      'string.pattern.name': 'New password must contain at least one {#name}.',
-      'any.required': 'New password is required.',
-    }),
+  newPassword: passwordValidator,
   confirmPassword: Joi.any()
     .valid(Joi.ref('newPassword'))
     .required()
