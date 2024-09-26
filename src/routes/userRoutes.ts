@@ -39,8 +39,7 @@ userRouter.route('/:id')
   .put(
     uploadToMemory,
     authMiddleware,
-    validateJoiRequest({ paramsSchema: userIdValidation }),
-    validateJoiRequest({ bodySchema: updateUserValidation }),
+    validateJoiRequest({ bodySchema: updateUserValidation, paramsSchema: userIdValidation }),
     updateUserById,
   )
   .delete(
@@ -61,8 +60,7 @@ userRouter.route('/:id/role')
   .put(
     authMiddleware,
     adminMiddleware,
-    validateJoiRequest({ paramsSchema: userIdValidation }),
-    validateJoiRequest({ bodySchema: updateUserRoleValidation }),
+    validateJoiRequest({ bodySchema: updateUserRoleValidation, paramsSchema: userIdValidation }),
     changeUserRole,
   );
 

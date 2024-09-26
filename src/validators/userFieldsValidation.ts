@@ -89,7 +89,8 @@ const updateUserPasswordValidation = Joi.object({
     }),
 });
 
-export { userIdValidation,
+export { 
+  userIdValidation,
   updateUserValidation,
   updateUserRoleValidation,
   updateUserPasswordValidation };
