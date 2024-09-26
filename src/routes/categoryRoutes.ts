@@ -42,8 +42,7 @@ categoryRouter.route('/:id')
     uploadToMemory,
     authMiddleware,
     adminMiddleware,
-    validateJoiRequest({ paramsSchema: categoryIdValidation }),
-    validateJoiRequest({ bodySchema: updateCategoryValidation }),
+    validateJoiRequest({ bodySchema: updateCategoryValidation, paramsSchema: categoryIdValidation }),
     updateCategoryById,
   )
   .delete(
